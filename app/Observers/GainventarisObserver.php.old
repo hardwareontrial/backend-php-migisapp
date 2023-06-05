@@ -1,0 +1,108 @@
+<?php
+
+namespace App\Observers;
+
+use App\Models\API\GaInventaris\AppGainventaris;
+use App\Models\API\GaInventaris\AppGainventarisLog;
+use Illuminate\Support\Facades\DB;
+
+class GainventarisObserver
+{
+    protected $except = [
+        'created_at',
+        'updated_at',
+        'deleted_at',
+        'id',
+        'kd_brg',
+        'pemilik_id',
+        'qrcode',
+        'dept_user'
+    ];
+
+    /**
+     * Handle the AppGainventaris "created" event.
+     *
+     * @param  \App\Models\API\GaInventaris\AppGainventaris  $appGainventaris
+     * @return void
+     */
+    public function created(AppGainventaris $appGainventaris)
+    {
+        DB::beginTransaction();
+        $log = new AppGainventarisLog();
+        $log->gainventaris_id = $appGainventaris->id;
+        $log->created_by = auth('sanctum')->user()->detail->id;
+        $log->action = 1;
+        foreach($appGainventaris->fresh()->getOriginal() as $key => $val){
+            if(!in_array($key, $this->except)){
+                $nkey = 'n_'.$key;
+                $log->$nkey = $val;
+            }
+        }
+        $log->save();
+        DB::commit();
+    }
+
+    /**
+     * Handle the AppGainventaris "updated" event.
+     *
+     * @param  \App\Models\API\GaInventaris\AppGainventaris  $appGainventaris
+     * @return void
+     */
+    public function updated(AppGainventaris $appGainventaris)
+    {
+        DB::beginTransaction();
+        $log = new AppGainventarisLog();
+        $log->gainventaris_id = $appGainventaris->id;
+        $log->created_by = auth('sanctum')->user()->detail->id;
+        $log->action = 2;
+            foreach($appGainventaris->getAttributes() as $key => $nVal){
+                if(!in_array($key, $this->except)){
+                    $oVal = $appGainventaris->getOriginal($key);
+                    $oKey = 'o_'.$key;
+                    $nKey = 'n_'.$key;
+                    $log->$oKey = $oVal;
+                    $log->$nKey = $nVal;
+                }
+            }
+        $log->save();
+        DB::commit();
+    }
+
+    /**
+     * Handle the AppGainventaris "deleted" event.
+     *
+     * @param  \App\Models\API\GaInventaris\AppGainventaris  $appGainventaris
+     * @return void
+     */
+    public function deleted(AppGainventaris $appGainventaris)
+    {
+
+    }
+
+    /**
+     * Handle the AppGainventaris "restored" event.
+     *
+     * @param  \App\Models\API\GaInventaris\AppGainventaris  $appGainventaris
+     * @return void
+     */
+    public function restored(AppGainventaris $appGainventaris)
+    {
+        //
+    }
+
+    /**
+     * Handle the AppGainventaris "force deleted" event.
+     *
+     * @param  \App\Models\API\GaInventaris\AppGainventaris  $appGainventaris
+     * @return void
+     */
+    public function forceDeleted(AppGainventaris $appGainventaris)
+    {
+        //
+    }
+
+    public function creatingLog(AppGainventaris $appGainventaris)
+    {
+        //
+    }
+}
