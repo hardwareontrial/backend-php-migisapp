@@ -1,0 +1,8 @@
+node_modules
+vendor
+Dockerfile
+.dockerignore
+**/.git
+**/.gitignore
+**/.gitattributes
+**/*.md
