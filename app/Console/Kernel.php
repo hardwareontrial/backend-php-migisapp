@@ -27,8 +27,8 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')->hourly();
 
         /** Command running using supervisor */
-        $schedule->command('migisapp:syncpresence')->cron('58 0,7,11,16 * * *')->description('Sync Attendance from DB att_log');
-        $schedule->command('migisapp:genpresencefile')->cron('2 1,8,12,17 * * *')->description('Generate data presence to txt file');
+        // $schedule->command('migisapp:syncpresence')->cron('58 0,7,11,16 * * *')->description('Sync Attendance from DB att_log');
+        // $schedule->command('migisapp:genpresencefile')->cron('2 1,8,12,17 * * *')->description('Generate data presence to txt file');
         $schedule->command('migisapp:scannewemp')->everySixHours()->description('Sync New Employee from DB att_log');
         // $schedule->command('migisapp:turnofflearning')->cron('13 0 * * *')->description('Turn Off Exam Schedule');
     }
