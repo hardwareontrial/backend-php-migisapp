@@ -1,4 +1,4 @@
-FROM mig/debian:bulleyes as backend-stage
+FROM mig/debian:bullseye as backend-stage
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends --no-install-suggests \
