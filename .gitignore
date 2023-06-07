@@ -17,3 +17,4 @@ yarn-error.log
 /app/Http/Controllers/API/Test
 /database/old_migrations
 /public/ViewerJS
+/supporting_files/structure_data_db.sql
