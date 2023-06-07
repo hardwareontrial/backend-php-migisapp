@@ -1,0 +1,42 @@
+version: '3'
+
+services:
+  laravel-backend:
+    image: migisapp/backend-php:1.02
+    container_name: example_container
+    restart: unless-stopped
+    tty: true
+    working_dir: /var/www/html/backend
+    ports:
+      - "80:80"
+    environment:
+      - APP_URL=http://localhost:80
+      - DB_CONNECTION=mysql
+      - DB_HOST=127.0.0.1
+      - DB_PORT=3306
+      - DB_DATABASE=database_1
+      - DB_USERNAME=username
+      - DB_PASSWORD=password
+      - DB_CONNECTION_ABSENSI=mysql
+      - DB_HOST_ABSENSI=127.0.0.1
+      - DB_PORT_ABSENSI=3306
+      - DB_DATABASE_ABSENSI=database_2
+      - DB_USERNAME_ABSENSI=username
+      - DB_PASSWORD_ABSENSI=password
+      - QUEUE_CONNECTION=database
+      - IP_FRONTEND=127.0.0.1:3000
+      - IP_BACKEND=127.0.0.1:80
+    volumes:
+      - ./config/backend-php/www.conf:/etc/php/7.4/fpm/pool.d/www.conf:ro
+      - ./config/backend-php/10-phpini-overrides.ini:/etc/php/7.4/cli/conf.d/10-phpini-overrides.ini:ro
+      - ./config/backend-php/10-phpini-overrides.ini:/etc/php/7.4/fpm/conf.d/10-phpini-overrides.ini:ro
+      - ./config/backend-php/nginx.conf:/etc/nginx/sites-enabled/backend.conf:ro
+      - ./config/backend-php/supervisord/backend.conf:/etc/supervisor/conf.d/backend.conf
+      - ./data/backend-php/storage/:/var/www/html/backend/storage/app/public/
+    networks:
+      net-database:
+        ipv4_address: 127.0.0.1
+
+networks:
+  net-database:
+    external: true
