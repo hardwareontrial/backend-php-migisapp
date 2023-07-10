@@ -15,12 +15,12 @@ class CreateAppUsersTable extends Migration
     {
         Schema::create('app_users', function (Blueprint $table) {
             $table->id();
-			$table->string('nik');
-			$table->string('name');
-			$table->unsignedBigInteger('dept_id')->nullable();
-			$table->unsignedBigInteger('position_id')->nullable();
-			$table->string('avatar')->nullable();
-			$table->tinyInteger('active');
+            $table->string('nik');
+            $table->string('name');
+            $table->unsignedBigInteger('dept_id')->nullable();
+            $table->unsignedBigInteger('position_id')->nullable();
+            $table->string('avatar')->nullable();
+            $table->tinyInteger('active');
             $table->timestamps();
         });
     }

@@ -15,9 +15,9 @@ class CreateAppUserLoginsTable extends Migration
     {
         Schema::create('app_user_logins', function (Blueprint $table) {
             $table->string('nik')->primary();
-			$table->string('s_nik');
-			$table->string('email')->unique();
-			$table->string('password');
+            $table->string('s_nik');
+            $table->string('email')->unique();
+            $table->string('password');
             $table->tinyInteger('active');
             $table->tinyInteger('admin');
             $table->timestamps();
