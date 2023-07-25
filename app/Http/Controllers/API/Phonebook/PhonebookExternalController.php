@@ -79,12 +79,14 @@ class PhonebookExternalController extends Controller
   public function update(Request $request, $id)
   {
     $data = PhonebookExternal::find($id);
-    $user = Auth::guard('sanctum')->user()->detail;
+    // $user = Auth::guard('sanctum')->user()->detail;
+    $user = 1;
 
     $log = new PhonebookExternalLog([
       'phonebook_type' => $request->input('typeinput'),
       'activity' => 'merubah/menambah data.',
-      'user_id' => $user->id,
+      // 'user_id' => $user->id,
+      'user_id' => 1,
     ]);
 
     $data->update([
@@ -100,7 +102,7 @@ class PhonebookExternalController extends Controller
     $detail = $request->input('inputs');
     foreach ($detail as $d)
     {
-      $updatedetail = PhonebookExternal::updateOrCreate(
+      $updatedetail = PhonebookExternalDetail::updateOrCreate(
         [ 'id' => $d['id'], 'phonebook_id' => $id ],
         [ 'number' => $d['number'], 'pic' => $d['pic'] ]
       );
