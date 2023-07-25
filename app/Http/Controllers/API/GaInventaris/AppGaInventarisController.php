@@ -107,7 +107,8 @@ class AppGaInventarisController extends Controller
       $user1 = $request->input('user1');
       $user2 = $request->input('user2');
       $store = AppGaInventaris::create([
-        'kd_brg' => $request->input('kode_brg'),
+        // 'kd_brg' => $request->input('kode_brg'),
+        'kd_brg' => $kode,
         'nama_brg' => strtoupper($request->input('nama_brg')),
         'tgl_beli' => $request->input('tglbeli'),
         'harga' => $request->input('harga'),
